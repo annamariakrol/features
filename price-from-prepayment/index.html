@@ -225,7 +225,7 @@
   <div class="header">
     <div class="header-inner">
       <h1>Price From Prepayment</h1>
-      <p>Enable online payments for variable-price services — patients prepay the minimum, settle the rest at the office.</p>
+      <p>Enable online payments for variable-price services — patients pay a booking deposit (minimum price), settle the rest at the office.</p>
       <span class="badge">REVPAY-6379 &middot; XL &middot; DP Payments</span>
     </div>
   </div>
@@ -267,7 +267,7 @@
       <h3>Patient Booking (User)</h3>
       <ul>
         <li>Patient selects a "price from" service and sees: <em>"from {min_price}"</em></li>
-        <li>Payment flow collects the minimum price as a prepayment (upfront or BNPL card-save)</li>
+        <li>Payment flow collects the minimum price as a booking deposit (upfront or BNPL card-save)</li>
         <li>Clear messaging: <em>"You'll pay the minimum price online. The final price depends on the consultation — any difference will be settled at the specialist's office."</em></li>
         <li>All notifications (SMS, WhatsApp, email, push) include "price may vary" messaging</li>
       </ul>
@@ -297,7 +297,7 @@
 
       <h3>Secondary &amp; Monitoring Metrics (post-launch)</h3>
       <ul>
-        <li><strong>GMV from price-from prepayments</strong> — total value of minimum prices collected online per month</li>
+        <li><strong>GMV from price-from deposits</strong> — total value of minimum prices collected online per month</li>
         <li><strong>Admin booking messaging quality</strong> — admin booking completion rates before/after</li>
       </ul>
       <table>
@@ -341,7 +341,7 @@
           </tr>
           <tr>
             <td class="text-bold">Net revenue impact</td>
-            <td>Value of lost bookings (volume drop &times; avg min price) vs. GMV from prepayments</td>
+            <td>Value of lost bookings (volume drop &times; avg min price) vs. GMV from deposits</td>
             <td>Net-positive &rarr; feature justified; net-negative &rarr; reassess rollout</td>
           </tr>
         </tbody>
@@ -509,7 +509,7 @@
 
       <div class="highlight-box highlight-blue">
         <strong>Definitions</strong>
-        <p><strong>Fully fixed:</strong> ALL services on the address are "price from" with a valid minimum price — once prepayment is enabled, every service is payable and the badge is 100% accurate.<br>
+        <p><strong>Fully fixed:</strong> ALL services on the address are "price from" with a valid minimum price — once the deposit model is enabled, every service is payable and the badge is 100% accurate.<br>
         <strong>Improved:</strong> The address has a mix of "price from" services (now payable) and services with no price at all (still not payable) — the badge becomes partially accurate.</p>
       </div>
 
@@ -586,7 +586,7 @@
         <li><strong>AC-PFP-006:</strong> Non-price-from services: doctor's configured NSF % unchanged</li>
         <li><strong>AC-PFP-007:</strong> Mixed bookings: sum of fixed prices + minimum prices</li>
         <li><strong>AC-PFP-008:</strong> Booking flow shows "from {min_price}" instead of flat price</li>
-        <li><strong>AC-PFP-009:</strong> Visit options page combines price label + payment section with prepayment explanation</li>
+        <li><strong>AC-PFP-009:</strong> Visit options page combines price label + payment section with deposit explanation</li>
         <li><strong>AC-PFP-010:</strong> BNPL booking steps show standard BNPL rules + "price may vary" messaging</li>
         <li><strong>AC-PFP-011:</strong> Confirmation screen after payment/card-save shows "minimum / may differ"</li>
         <li><strong>AC-PFP-012:</strong> Booking success page shows payment info (currently hidden for price-from)</li>
@@ -594,15 +594,15 @@
         <li><strong>AC-PFP-014:</strong> Mandatory notifications (4 reminders + 1 cancellation) include "price may vary"</li>
         <li><strong>AC-PFP-015:</strong> Optional notifications include adapted "minimum price" messaging</li>
         <li><strong>AC-PFP-016:</strong> All notification content translated in 6 locales</li>
-        <li><strong>AC-PFP-017:</strong> Admin booking form: toggle/checkbox for price-from with contextual note (e.g. &ldquo;The minimum price will be collected from the patient online as a prepayment. The final price can be settled at the office.&rdquo;). Designer to finalize UI.</li>
+        <li><strong>AC-PFP-017:</strong> Admin booking form: toggle/checkbox for price-from with contextual note (e.g. &ldquo;The minimum price will be collected from the patient online as a booking deposit. The final price can be settled at the office.&rdquo;). Designer to finalize UI.</li>
         <li><strong>AC-PFP-018:</strong> Admin bookings: mandatory/optional payment per doctor calendar settings</li>
         <li><strong>AC-PFP-019:</strong> Admin toggle ON: "price may vary" messaging in notifications</li>
-        <li><strong>AC-PFP-020:</strong> Visit details drawer shows prepayment context for doctor</li>
+        <li><strong>AC-PFP-020:</strong> Visit details drawer shows deposit context for doctor</li>
         <li><strong>AC-PFP-021:</strong> Platform restrictions on price-from schedules removed when gate ON</li>
         <li><strong>AC-PFP-022:</strong> Commission calculated on minimum price only</li>
         <li><strong>AC-PFP-023:</strong> Cancellation/refund: same rules as fixed-price (upfront and BNPL)</li>
         <li><strong>AC-PFP-024:</strong> Saved card: same flow as fixed-price; BNPL freeze identical</li>
-        <li><strong>AC-PFP-025:</strong> Reschedule: prepayment carries over</li>
+        <li><strong>AC-PFP-025:</strong> Reschedule: deposit carries over</li>
         <li><strong>AC-PFP-026:</strong> Feature gate OFF = current behavior preserved exactly</li>
         <li><strong>AC-PFP-027:</strong> Fixed-price services: zero regression</li>
         <li><strong>AC-PFP-028:</strong> Admin bookings for fixed-price: unchanged</li>
@@ -620,11 +620,11 @@
         <li><strong>Cancellation (BNPL):</strong> Nothing charged in free window, standard BNPL rules apply</li>
         <li><strong>Wallet / saved cards:</strong> Same flow as fixed-price; patient always confirms</li>
         <li><strong>BNPL info:</strong> Booking steps show all rules + "price may vary" messaging</li>
-        <li><strong>Reschedule:</strong> Prepayment carries over</li>
+        <li><strong>Reschedule:</strong> Deposit carries over</li>
         <li><strong>Final &lt; minimum:</strong> Doctor initiates manual refund (no automation in Phase 1)</li>
         <li><strong>Admin toggle:</strong> Price-from ON = minimum + messaging; OFF = fixed price entered by doctor</li>
         <li><strong>Admin payment mode:</strong> Mandatory/optional per calendar settings, same as user</li>
-        <li><strong>Doctor notification:</strong> Visit details drawer shows prepayment context</li>
+        <li><strong>Doctor notification:</strong> Visit details drawer shows deposit context</li>
         <li><strong>Commission:</strong> On deposit (minimum price) only, standard invoice label</li>
       </ul>
     </div>
