@@ -219,6 +219,65 @@
       background: var(--card);
     }
     .section-nav a:hover { background: #f0fdfa; border-color: var(--teal); }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    .faq-item:last-child { margin-bottom: 0; }
+    .faq-q {
+      list-style: none;
+      padding: 0.85rem 1rem 0.85rem 2.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      background: var(--bg);
+      transition: background 0.15s;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q::marker { content: ""; }
+    .faq-q::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-right: 2px solid var(--teal);
+      border-bottom: 2px solid var(--teal);
+      transform: translateY(-65%) rotate(-45deg);
+      transition: transform 0.18s ease;
+    }
+    .faq-item[open] .faq-q::before {
+      transform: translateY(-35%) rotate(45deg);
+    }
+    .faq-item[open] .faq-q {
+      background: #f0fdfa;
+      border-bottom: 1px solid var(--border);
+      color: var(--teal-dark);
+    }
+    .faq-a {
+      padding: 1rem 1.25rem;
+      font-size: 0.875rem;
+      color: #334155;
+      line-height: 1.65;
+    }
+    .faq-a p { margin-bottom: 0.6rem; }
+    .faq-a p:last-child { margin-bottom: 0; }
+    .faq-a ul { padding-left: 1.25rem; margin: 0.5rem 0; }
+    .faq-a li { margin-bottom: 0.3rem; }
+    .faq-a table { margin: 0.75rem 0; }
+    .faq-a .note {
+      margin-top: 0.75rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.825rem;
+    }
   </style>
 </head>
 <body>
@@ -240,6 +299,7 @@
       <a href="#rollout">Rollout</a>
       <a href="#acs">Acceptance Criteria</a>
       <a href="#edge-cases">Edge Cases</a>
+      <a href="#faq">Common Questions</a>
     </nav>
 
     <!-- VALUE PROPOSITION -->
@@ -629,6 +689,106 @@
       </ul>
     </div>
 
+    <!-- COMMON QUESTIONS -->
+    <div class="card" id="faq">
+      <h2>Common Questions</h2>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Real questions raised during design and stakeholder reviews, with data-backed answers.</p>
+
+      <details class="faq-item">
+        <summary class="faq-q">Why can't doctors just set a fixed price?</summary>
+        <div class="faq-a">
+          <p>For many specialties, the final scope of a visit genuinely cannot be known in advance. Real examples from our database:</p>
+          <ul>
+            <li><strong>Dental consultation (from 100 PLN):</strong> A check-up may stay a check-up, or it may become a filling, an X-ray, or a referral. Doctors write things like: <em>"The price shown is approximate. The final cost will be determined after evaluation and may change depending on the scope of treatment."</em></li>
+            <li><strong>Gynaecology (from 250 PLN):</strong> One doctor offers: consultation 250 PLN / + ultrasound + Pap smear 350 PLN / + LBC cytology 450 PLN / + HPV test 550 PLN. The patient books a "consultation" but the scope depends on what the doctor finds.</li>
+            <li><strong>Root canal (from 450–950 PLN):</strong> Price depends on how many canals the tooth has (1–4), whether it's primary or retreatment, and whether a microscope is needed.</li>
+          </ul>
+          <p>Rough split: ~40% of "price from" services are genuinely variable (dental, surgical, diagnostic). ~60% could probably be fixed prices if doctors configured them properly — but we can't force that change. Phase 1 unlocks payment for the legitimate cases and gives us data on the rest.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What are the most common "price from" services? How wide are the price ranges?</summary>
+        <div class="faq-a">
+          <p>Top 3 by number of listings (ranges below are <em>minimum prices across different doctors</em> — not the range one patient might pay):</p>
+          <table>
+            <thead>
+              <tr><th>Country</th><th>Service</th><th class="text-right">Listings</th><th class="text-right">Avg min</th><th class="text-right">Range (min–max)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td rowspan="3" class="text-bold" style="vertical-align:top;padding-top:0.6rem;">Poland</td><td>Dental consultation</td><td class="text-right">1,828</td><td class="text-right">155 PLN</td><td class="text-right">30–390 PLN</td></tr>
+              <tr><td>Caries treatment</td><td class="text-right">1,174</td><td class="text-right">329 PLN</td><td class="text-right">80–710 PLN</td></tr>
+              <tr><td>Composite filling</td><td class="text-right">1,074</td><td class="text-right">332 PLN</td><td class="text-right">50–700 PLN</td></tr>
+              <tr><td rowspan="3" class="text-bold" style="vertical-align:top;padding-top:0.6rem;">Italy</td><td>Psychological consultation</td><td class="text-right">1,274</td><td class="text-right">64 EUR</td><td class="text-right">30–120 EUR</td></tr>
+              <tr><td>Follow-up visit</td><td class="text-right">1,117</td><td class="text-right">73 EUR</td><td class="text-right">1–220 EUR</td></tr>
+              <tr><td>Psychotherapy</td><td class="text-right">942</td><td class="text-right">69 EUR</td><td class="text-right">35–150 EUR</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Key insight:</strong> dental services have the widest spread (root canal minimums range from 75 PLN to 2,090 PLN across doctors). Psychology and therapy services are much narrower (typically 30–150 EUR). The "problem" varies dramatically by specialty — which is exactly why a blanket phase-1 test in Poland (a dental-heavy market) is the right approach.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Why call it a "booking deposit" and not "prepayment"? Doesn't the word "from" create a price anchoring problem?</summary>
+        <div class="faq-a">
+          <p>Both points are valid. <strong>"Prepayment" implies full payment</strong> — a patient who pays a "prepayment" expects the price to be settled. <strong>"Deposit" signals partial payment</strong> — most people know a deposit is just a portion of the total. We changed all patient-facing copy to "booking deposit" before the request was finalised.</p>
+          <p>On price anchoring: yes, showing "from 100 EUR" makes 100 the mental reference point, and anything above feels like a penalty. The ideal fix — showing typical ranges like <em>"Most patients pay 280–420 EUR"</em> — requires data we don't have. We have minimum prices; we don't track what patients actually pay at the office (that money goes directly to the doctor).</p>
+          <p>What we <em>can</em> do in the design:</p>
+          <ul>
+            <li>Frame the charged amount as a deposit, not a price: <em>"Booking deposit: 150 PLN"</em></li>
+            <li>Add a clear disclaimer on the payment screen: <em>"The final cost depends on the scope of the consultation. Any difference is settled at the specialist's office."</em></li>
+          </ul>
+          <p>The word "deposit" already does heavy lifting — it tells patients "this is a part of the cost" rather than "this is the cost." Phase 1 will tell us whether that framing is enough.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Won't patients feel financially trapped if the final price is much higher?</summary>
+        <div class="faq-a">
+          <p>The "contractor" analogy — paying 2k upfront with no idea of the final bill — is vivid but slightly off. A closer analogy: you call a plumber for a leaky faucet. They charge a 100 EUR call-out fee (the deposit you pay when booking). When they arrive, they assess the problem — it might be a 20-minute fix (total: 100 EUR, your deposit covers it) or a pipe replacement (total: 350 EUR, you pay the extra 250 after). You know the minimum upfront, the plumber explains the scope when they see the problem, and you choose whether to proceed.</p>
+          <p>Two important nuances:</p>
+          <ul>
+            <li><strong>The "surprise" typically isn't within the same visit.</strong> For dental — the most common case — a patient books a consultation at ~150 PLN and the doctor examines them. If a root canal is needed, it's scheduled as a separate booking at a different price. The patient leaves the consultation having paid exactly the deposit, with a treatment plan and cost estimate for what comes next.</li>
+            <li><strong>Today there is zero online payment for these services.</strong> The patient books for free, shows up, and pays whatever the doctor says at the desk. We're not introducing price uncertainty — it already exists. We're adding a minimum commitment with explicit messaging, which is strictly more transparent than the current experience.</li>
+          </ul>
+          <div class="note highlight-amber">
+            <strong>Open design question</strong>
+            The copy on the payment screen and wallet pages is where this is won or lost. The disclaimer — "The final price depends on the scope of the consultation" — needs to be prominent, not buried in small print.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Are we fixing a symptom? Shouldn't we fix how doctors configure their services instead?</summary>
+        <div class="faq-a">
+          <p>Honest answer: yes, partly. Many doctors use "price from" because they'd rather show a low price than risk scaring patients away — not because the service is genuinely variable. That's a configuration problem.</p>
+          <p>But also no — there are legitimate medical reasons for variable pricing, and we can't force doctors to reconfigure thousands of services before we ship. What we <em>can</em> do:</p>
+          <ul>
+            <li><strong>Short-term (Phase 1):</strong> Unlock payment for the legitimate cases and measure what happens.</li>
+            <li><strong>Medium-term:</strong> Add a nudge when doctors enable the deposit toggle — prompt them to fill in their service description if it's empty. That's where they should set patient expectations.</li>
+            <li><strong>Long-term:</strong> Phase 1 data will tell us whether conversion is low because the deposit model doesn't work, or low because certain service types genuinely shouldn't use it — which would give us a data-backed argument for better service configuration.</li>
+          </ul>
+          <p>We're not building this instead of fixing the root cause. We're building it to understand the problem better.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What's our conversion target, and how long until we know if it's working?</summary>
+        <div class="faq-a">
+          <p>We can't measure this directly yet because "price from" services are blocked from online payments today — there's no baseline. We're building this feature precisely to create that baseline.</p>
+          <p><strong>Target:</strong> 15–20% user booking conversion in Phase 1 (Poland). For reference, fixed-price upfront conversion in Poland is ~47%. We're setting a conservative target because variable pricing is inherently more friction than a fixed price.</p>
+          <p><strong>Key post-launch signals we'll watch:</strong></p>
+          <ul>
+            <li>Payment-step drop-off rate: price-from vs. fixed-price</li>
+            <li>Booking volume before vs. after (does adding a payment barrier reduce total bookings?)</li>
+            <li>Net revenue impact: value of any lost bookings vs. GMV from deposits collected</li>
+            <li>Admin toggle adoption: how often doctors override to a fixed price (high override rate = deposit model isn't landing)</li>
+          </ul>
+          <p>Phase 2 — collecting the remaining amount online — is contingent on Phase 1 results. If conversion is too low, we iterate on copy and design. If booking volume drops, we reconsider the rollout approach.</p>
+        </div>
+      </details>
+    </div>
+
     <div class="card">
       <h2>References</h2>
       <ul>
@@ -639,7 +799,7 @@
     </div>
 
     <p class="updated">
-      Last updated: <strong>2026-04-20</strong> &middot;
+      Last updated: <strong>2026-04-21</strong> &middot;
       Owner: Anka (Product Manager, DP Payments) &middot;
       <a href="https://docplanner.atlassian.net/browse/REVPAY-6379" target="_blank">Jira ticket</a>
     </p>
