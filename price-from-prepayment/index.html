@@ -285,13 +285,14 @@
     <div class="header-inner">
       <h1>Price From Prepayment</h1>
       <p>Enable online payments for variable-price services — patients pay a booking deposit (minimum price), settle the rest at the office.</p>
-      <span class="badge">REVPAY-6379 &middot; XL &middot; DP Payments</span>
+      <span class="badge">REVPAY-6379 &middot; XL &middot; DP Payments &middot; Rollout 1: User bookings</span>
     </div>
   </div>
 
   <div class="container">
     <nav class="section-nav">
       <a href="#value">Value Proposition</a>
+      <a href="#demo">Demo</a>
       <a href="#how">How It Works</a>
       <a href="#metrics">Success Metrics</a>
       <a href="#badge">Badge Loophole Fix</a>
@@ -325,27 +326,38 @@
       </div>
     </div>
 
+    <!-- DEMO -->
+    <div class="card" id="demo">
+      <h2>Demo</h2>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">End-to-end walkthrough of the patient booking flow for a "price from" service, plus the doctor-facing surfaces (Agenda drawer + Payments area).</p>
+      <video controls preload="metadata" style="width:100%;border-radius:8px;border:1px solid var(--border);background:#000;">
+        <source src="demo.mp4" type="video/mp4">
+        Your browser does not support the video tag. <a href="demo.mp4">Download the demo</a>.
+      </video>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">Recorded 2026-05-15 against the Phase 1 test profile (PL Autopay, doctor_id 367233).</p>
+    </div>
+
     <!-- HOW IT WORKS -->
     <div class="card" id="how">
-      <h2>How It Works</h2>
-      <h3>Patient Booking (User)</h3>
+      <h2>How It Works (Rollout 1 — User bookings)</h2>
+      <h3>Patient booking flow</h3>
       <ul>
-        <li>Patient selects a "price from" service and sees: <em>"from {min_price}"</em></li>
-        <li>Payment flow collects the minimum price as a booking deposit (upfront or BNPL card-save)</li>
-        <li>Clear messaging: <em>"You'll pay the minimum price online. The final price depends on the consultation — any difference will be settled at the specialist's office."</em></li>
-        <li>All notifications (SMS, WhatsApp, email, push) include "price may vary" messaging</li>
+        <li>Regular booking steps (before payment pages) mention the payment methods available for the service after the patient confirms personal details.</li>
+        <li>Optional payment page, Wallet page and booking success page show the booking deposit amount + disclaimer: <em>"The final price might be higher; any outstanding amount is settled in the specialist's office."</em></li>
+        <li>Charged amount = doctor-configured minimum price (upfront or BNPL card-save).</li>
+        <li>All mandatory and optional notifications (SMS, WhatsApp, email, push) include the "price may vary" messaging across the 6 locales.</li>
       </ul>
-      <h3>Admin Booking (Doctor)</h3>
+      <h3>Doctor-facing surfaces</h3>
       <ul>
-        <li>Doctor sees a toggle/checkbox for "price from" services on the booking form</li>
-        <li>Toggle ON: uses minimum price with "price may vary" messaging</li>
-        <li>Toggle OFF: doctor enters a fixed price, standard notifications</li>
+        <li><strong>Agenda drawer</strong> — a ticked, greyed-out (non-editable) checkbox indicating this is a 'price from' service, with a disclaimer reminding the doctor to collect the remaining amount directly in the office.</li>
+        <li><strong>Payments area</strong> — 3 tiles instead of 2, with 'price from' prepayment highlighted as a new feature (copy TBD).</li>
       </ul>
       <h3>BNPL (Book Now Pay Later)</h3>
       <ul>
-        <li>No-show fee = 100% of minimum price (no split into separate transactions)</li>
-        <li>Booking steps display all payment rules + "minimum price / final price may vary" messaging</li>
+        <li>No-show fee = 100% of minimum price — the full deposit is captured as a single transaction (no split into NSF + remaining amount).</li>
+        <li>Booking steps display all payment rules + "minimum price / final price may vary" messaging.</li>
       </ul>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Admin booking creation (toggle/checkbox on the booking form) is <strong>not</strong> in Rollout 1 — it ships in a later rollout. The Agenda drawer changes above cover the read-side context for doctors during Rollout 1.</p>
     </div>
 
     <!-- SUCCESS METRICS -->
@@ -713,14 +725,36 @@
     <!-- ROLLOUT -->
     <div class="card" id="rollout">
       <h2>Rollout Plan</h2>
+      <p style="font-size:0.85rem;color:#334155;margin-bottom:0.75rem;">Four phases over ~2 weeks, starting with internal test doctors and expanding to all users by <strong>Jun 1, 2026</strong>. All four phases are part of <strong>Rollout 1</strong> (user bookings only).</p>
       <table>
         <thead>
-          <tr><th>Phase</th><th>Countries</th><th>Target</th></tr>
+          <tr><th>Phase</th><th>Go-Live</th><th>Audience</th><th>Notes</th></tr>
         </thead>
         <tbody>
-          <tr><td><span class="tag tag-phase1">Phase 1</span></td><td>Poland</td><td>Internal test profiles</td></tr>
-          <tr><td><span class="tag tag-phase2">Phase 2</span></td><td>Italy, Spain, Mexico, Brazil</td><td>Internal test profiles per country</td></tr>
-          <tr><td><span class="tag tag-phase3">Phase 3</span></td><td>All countries</td><td>All customers (customer communication plan to be defined)</td></tr>
+          <tr>
+            <td><span class="tag tag-phase1">Phase 1</span></td>
+            <td>May 19, 2026</td>
+            <td>PL test doctors</td>
+            <td>Autopay (doctor_id 367233) + Stripe (doctor_id 358691)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-phase2">Phase 2</span></td>
+            <td>May 20, 2026</td>
+            <td>IT / ES / MX / BR test doctors</td>
+            <td>Autopay + Stripe per country; dLocal + Stripe in MX &amp; BR</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-phase3">Phase 3</span></td>
+            <td>May 25, 2026</td>
+            <td>Up to 500 customers per country</td>
+            <td>Curated allow-list across all 5 markets</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-phase3">Phase 4</span></td>
+            <td>Jun 1, 2026</td>
+            <td>All users</td>
+            <td>Full release across PL / IT / ES / MX / BR</td>
+          </tr>
         </tbody>
       </table>
     </div>
