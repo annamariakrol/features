@@ -278,6 +278,43 @@
       border-radius: 6px;
       font-size: 0.825rem;
     }
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 700px) {
+      .screens { grid-template-columns: 1fr; }
+    }
+    .screen {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fafbfc;
+      display: flex;
+      flex-direction: column;
+    }
+    .screen img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #fff;
+    }
+    .screen .caption {
+      padding: 0.6rem 0.85rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+    .screen .caption strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.15rem;
+      font-size: 0.85rem;
+    }
+    .screen-narrow img { max-height: 480px; width: auto; margin: 0 auto; }
   </style>
 </head>
 <body>
@@ -358,6 +395,38 @@
         <li>Booking steps display all payment rules + "minimum price / final price may vary" messaging.</li>
       </ul>
       <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Admin booking creation (toggle/checkbox on the booking form) is <strong>not</strong> in Rollout 1 — it ships in a later rollout. The Agenda drawer changes above cover the read-side context for doctors during Rollout 1.</p>
+
+      <h3>Rollout 1 surfaces</h3>
+      <div class="screens">
+        <div class="screen">
+          <img src="01-payment-page-choose.png" alt="Choose how to pay for your visit — Book now pay later vs Pay online now, with Reservation deposit highlighted">
+          <div class="caption">
+            <strong>Payment method choice (patient)</strong>
+            "Reservation deposit €18" with the disclaimer "The final price may be higher. The difference will be paid directly at the specialist's office."
+          </div>
+        </div>
+        <div class="screen">
+          <img src="02-card-selection.png" alt="Select the card to confirm the reservation, with deposit and process explainer">
+          <div class="caption">
+            <strong>BNPL card selection (patient)</strong>
+            Same "Reservation deposit" callout plus the "How does the payment process work" explainer (100% of service price blocked, charged after the visit).
+          </div>
+        </div>
+        <div class="screen screen-narrow">
+          <img src="03-agenda-drawer.png" alt="Agenda drawer with ticked greyed-out 'From' checkbox and deposit explanation">
+          <div class="caption">
+            <strong>Agenda drawer (doctor)</strong>
+            Ticked, greyed-out <em>From</em> checkbox: "The patient pays a deposit online. The remainder is collected during the visit." Appears on <strong>all</strong> 'price from' visits — not only paid ones.
+          </div>
+        </div>
+        <div class="screen">
+          <img src="04-payments-area.png" alt="Payments area Summary with three outstanding tiles including 'Charges for price from services' new tile">
+          <div class="caption">
+            <strong>Payments area (doctor)</strong>
+            3 tiles instead of 2 — the new "Charges for 'price from' services" tile (marked <em>New</em>) sits next to "How does Payments work?" and "Payment requests".
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- SUCCESS METRICS -->
@@ -428,7 +497,6 @@
         <thead>
           <tr>
             <th>Country</th>
-            <th>Phase</th>
             <th class="text-right">User bookings</th>
             <th class="text-right">Admin bookings</th>
             <th class="text-right">Total</th>
@@ -440,7 +508,6 @@
         <tbody>
           <tr>
             <td class="text-bold">Poland</td>
-            <td><span class="tag tag-phase1">Phase 1</span></td>
             <td class="text-right">4,428</td>
             <td class="text-right">4,754</td>
             <td class="text-right text-bold">9,182</td>
@@ -450,7 +517,6 @@
           </tr>
           <tr>
             <td class="text-bold">Italy</td>
-            <td><span class="tag tag-phase2">Phase 2</span></td>
             <td class="text-right">334</td>
             <td class="text-right">812</td>
             <td class="text-right text-bold">1,146</td>
@@ -460,7 +526,6 @@
           </tr>
           <tr>
             <td class="text-bold">Spain</td>
-            <td><span class="tag tag-phase2">Phase 2</span></td>
             <td class="text-right">483</td>
             <td class="text-right">2,302</td>
             <td class="text-right text-bold">2,785</td>
@@ -470,7 +535,6 @@
           </tr>
           <tr>
             <td class="text-bold">Mexico</td>
-            <td><span class="tag tag-phase2">Phase 2</span></td>
             <td class="text-right">2,590</td>
             <td class="text-right">14,121</td>
             <td class="text-right text-bold">16,711</td>
@@ -480,7 +544,6 @@
           </tr>
           <tr>
             <td class="text-bold">Brazil</td>
-            <td><span class="tag tag-phase2">Phase 2</span></td>
             <td class="text-right">54</td>
             <td class="text-right">823</td>
             <td class="text-right text-bold">877</td>
@@ -490,7 +553,6 @@
           </tr>
           <tr class="row-total">
             <td>Total</td>
-            <td></td>
             <td class="text-right">7,889</td>
             <td class="text-right">22,812</td>
             <td class="text-right">30,701</td>
