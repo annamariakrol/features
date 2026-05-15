@@ -382,7 +382,7 @@
         <li>Regular booking steps (before payment pages) mention the payment methods available for the service after the patient confirms personal details.</li>
         <li>Optional payment page, Wallet page and booking success page show the booking deposit amount + disclaimer: <em>"The final price might be higher; any outstanding amount is settled in the specialist's office."</em></li>
         <li>Charged amount = doctor-configured minimum price (upfront or BNPL card-save).</li>
-        <li>All mandatory and optional notifications (SMS, WhatsApp, email, push) include the "price may vary" messaging across the 6 locales.</li>
+        <li>Notifications: for user bookings with <strong>required</strong> payment, we send a single SMS telling the patient by when they need to pay or the visit will be cancelled — that's the only notification that actually goes out in this flow. The broader "price may vary" copy across the other reminders/cancellation channels lands later, when admin bookings and optional-payment scenarios come in.</li>
       </ul>
       <h3>Doctor-facing surfaces</h3>
       <ul>
