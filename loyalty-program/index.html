@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>Patient Loyalty Program — LATAM | DP Payments</title>
+  <style>
+    :root {
+      --teal: #00b5b5;
+      --teal-dark: #007d7d;
+      --bg: #f5f7f9;
+      --card: #fff;
+      --border: #e2e8f0;
+      --text: #1a202c;
+      --text-muted: #64748b;
+      --accent-green: #059669;
+      --accent-green-bg: #ecfdf5;
+      --accent-blue: #2563eb;
+      --accent-blue-bg: #eff6ff;
+      --accent-amber: #d97706;
+      --accent-amber-bg: #fffbeb;
+      --accent-violet: #7c3aed;
+      --accent-violet-bg: #f5f3ff;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .header {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+    }
+    .header-inner { max-width: 960px; margin: 0 auto; }
+    .header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .header p { font-size: 1rem; opacity: 0.9; }
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--teal-dark); }
+    .card h3 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.5rem; color: var(--text); }
+    .card p, .card li { font-size: 0.9rem; color: #334155; }
+    .card ul { padding-left: 1.25rem; margin: 0.5rem 0; }
+    .card li { margin-bottom: 0.35rem; }
+    .highlight-box { padding: 1rem 1.25rem; border-radius: 8px; margin: 0.75rem 0; }
+    .highlight-green { background: var(--accent-green-bg); border-left: 4px solid var(--accent-green); }
+    .highlight-blue { background: var(--accent-blue-bg); border-left: 4px solid var(--accent-blue); }
+    .highlight-amber { background: var(--accent-amber-bg); border-left: 4px solid var(--accent-amber); }
+    .highlight-violet { background: var(--accent-violet-bg); border-left: 4px solid var(--accent-violet); }
+    .highlight-box strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.25rem; }
+    .highlight-green strong { color: var(--accent-green); }
+    .highlight-blue strong { color: var(--accent-blue); }
+    .highlight-amber strong { color: var(--accent-amber); }
+    .highlight-violet strong { color: var(--accent-violet); }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin: 0.75rem 0;
+    }
+    .stat-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+    .stat-box .stat-value { font-size: 1.25rem; font-weight: 700; color: var(--teal-dark); }
+    .stat-box .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+    table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+    th {
+      background: var(--bg);
+      font-weight: 600;
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 2px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    .text-right { text-align: right; }
+    .text-bold { font-weight: 600; }
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .tag-phase1 { background: #dbeafe; color: #1d4ed8; }
+    .tag-phase2 { background: #fef3c7; color: #92400e; }
+    .tag-phase3 { background: #d1fae5; color: #065f46; }
+    .tag-mx { background: #fef3c7; color: #92400e; }
+    .tag-br { background: #d1fae5; color: #065f46; }
+    .updated { text-align: center; padding: 1rem; font-size: 0.75rem; color: var(--text-muted); }
+    .updated a { color: var(--teal-dark); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .ac-list { counter-reset: ac; list-style: none; padding: 0; }
+    .ac-list li {
+      counter-increment: ac;
+      padding: 0.5rem 0 0.5rem 2.5rem;
+      position: relative;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .ac-list li::before {
+      content: counter(ac, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 2rem;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--teal);
+      background: #f0fdfa;
+      border-radius: 4px;
+      padding: 0.1rem 0;
+    }
+    .ac-list li:last-child { border-bottom: none; }
+    .section-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .section-nav a {
+      font-size: 0.8rem;
+      color: var(--teal-dark);
+      text-decoration: none;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+    }
+    .section-nav a:hover { background: #f0fdfa; border-color: var(--teal); }
+    .faq-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+    .faq-item:last-child { margin-bottom: 0; }
+    .faq-q {
+      list-style: none;
+      padding: 0.85rem 1rem 0.85rem 2.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      background: var(--bg);
+      transition: background 0.15s;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q::marker { content: ""; }
+    .faq-q::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-right: 2px solid var(--teal);
+      border-bottom: 2px solid var(--teal);
+      transform: translateY(-65%) rotate(-45deg);
+      transition: transform 0.18s ease;
+    }
+    .faq-item[open] .faq-q::before { transform: translateY(-35%) rotate(45deg); }
+    .faq-item[open] .faq-q { background: #f0fdfa; border-bottom: 1px solid var(--border); color: var(--teal-dark); }
+    .faq-a { padding: 1rem 1.25rem; font-size: 0.875rem; color: #334155; line-height: 1.65; }
+    .faq-a p { margin-bottom: 0.6rem; }
+    .faq-a p:last-child { margin-bottom: 0; }
+    .faq-a ul { padding-left: 1.25rem; margin: 0.5rem 0; }
+    .faq-a li { margin-bottom: 0.3rem; }
+    .diagram {
+      background: #fafbfc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      text-align: center;
+      font-style: italic;
+    }
+    .pillrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.5rem 0 0.75rem;
+    }
+    .pillrow .pill {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: #f0fdfa;
+      color: var(--teal-dark);
+      border: 1px solid #ccfbf1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <h1>Patient Loyalty Program — LATAM</h1>
+      <p>A one-time acquisition reward for patients who save a card on file: book online, save a card, pay with it — earn a credit you can spend on a future visit. Mexico and Brazil at launch.</p>
+      <span class="badge">REVPAY-6421 &middot; XL (2 × L sub-cycles) &middot; DP Payments &middot; Q2 2026 &middot; MX + BR launch</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <nav class="section-nav">
+      <a href="#value">Value Proposition</a>
+      <a href="#how">How It Works</a>
+      <a href="#earning">Earning</a>
+      <a href="#spending">Spending</a>
+      <a href="#lifecycle">Credit Lifecycle</a>
+      <a href="#money">Money Flow</a>
+      <a href="#rollout">Markets &amp; Rollout</a>
+      <a href="#scope">Scope</a>
+      <a href="#faq">Common Questions</a>
+      <a href="#refs">References</a>
+    </nav>
+
+    <!-- VALUE PROPOSITION -->
+    <div class="card" id="value">
+      <h2>Value Proposition</h2>
+      <div class="highlight-box highlight-green">
+        <strong>Why we are building this</strong>
+        <p>In LATAM, a large share of patients book online but do not save a card on file — so their next visit defaults to "pay at the office", losing the booking commitment and the payments-economics lift that comes with online payment. This program rewards patients for crossing that bridge: save a card, pay online, earn a credit you can spend on a future visit.</p>
+      </div>
+      <div class="two-col">
+        <div class="highlight-box highlight-green">
+          <strong>Wallet adoption</strong>
+          <p>The qualifying action — saving a card during a booking — is what we are paying for. Each grant converts a "no-card-on-file" patient into a "card-on-file" patient, permanently.</p>
+        </div>
+        <div class="highlight-box highlight-green">
+          <strong>Higher online-paid share</strong>
+          <p>Patients with a card on file are more likely to pay online on their next visit. The credit becomes spendable on online-paid visits only — so redemption itself reinforces the online-paid behaviour we want to grow.</p>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="highlight-box highlight-blue">
+          <strong>Short-term retention</strong>
+          <p>A six-month expiry on the credit creates a tangible reason to come back. Rebooking inside the credit's lifetime is the primary retention metric for the experiment.</p>
+        </div>
+        <div class="highlight-box highlight-blue">
+          <strong>Doctor invisible — zero adoption friction</strong>
+          <p>The program runs entirely on the patient side. Doctors do not opt in, are not invoiced, and see no change in their payouts, dashboards, or tax documents. No per-merchant rollout, no enablement work — it just turns on for eligible patients.</p>
+        </div>
+      </div>
+      <div class="highlight-box highlight-violet">
+        <strong>Tax-clean by design</strong>
+        <p>DocPlanner funds the reward (not the doctor). The doctor still issues a CFDI / NFS-e for the full visit price and is paid the full visit price — identical to a non-loyalty visit. The program is recognised as a DP-side marketing/loyalty expense, deductible against a periodic invoice from the payment processor. No doctor-side B2B subsidy invoice, no IVA exposure for IVA-exempt medical specialists.</p>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="card" id="how">
+      <h2>How It Works</h2>
+      <p>Two coupled sub-cycles ship behind a single shared feature flag. <strong>Collection</strong> handles earning the credit; <strong>Redemption</strong> handles spending it. The patient-visible launch only happens once both sub-cycles are live and the dLocal funds-flow sandbox tests have passed.</p>
+
+      <h3>Patient journey — end to end</h3>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart TD
+    Start([Patient books a visit<br/>MX or BR doctor on DP Payments via dLocal])
+    Start --> Elig{Eligible?<br/>logged in · zero cards on file ·<br/>treatment group · not granted before}
+
+    Elig -- No --> NoOffer[No loyalty offer<br/>booking proceeds normally]
+    Elig -- Yes --> Promo[Show promotional copy + T&amp;Cs<br/>at card-save step]
+
+    Promo --> Accept{T&amp;Cs accepted?}
+    Accept -- No --> NoOffer
+    Accept -- Yes --> Pay[Patient saves card<br/>and pays for the visit]
+
+    Pay --> PayType{Payment method}
+    PayType -- Upfront --> WaitUp[Wait for visit.endAt to pass<br/>scheduled grant job sweeps]
+    PayType -- BNPL --> WaitBnpl[Wait for the existing post-visit capture<br/>e.g. 48h cron or doctor-marked outcome]
+
+    WaitUp --> CancelCheck{Cancellation or refund<br/>recorded before the grant moment?}
+    WaitBnpl --> CancelCheck
+
+    CancelCheck -- Yes --> NoGrant[No credit granted<br/>one-time eligibility preserved<br/>for a future qualifying booking]
+    CancelCheck -- No --> Grant[/Grant fires<br/>credit on the patient balance<br/>6-month expiry · patient notified/]
+
+    Grant --> Life{Credit lifecycle}
+    Life -- Patient redeems<br/>on a future visit --> Redeem[Apply credit at checkout<br/>full or partial · card on file required<br/>doctor still receives 100% of visit price]
+    Life -- Unused after 6 months --> Expire[Expire<br/>breakage recorded for finance]
+    Life -- Fraud detected --> Revoke[Admin tool revokes manually<br/>only path to remove granted credit]
+
+    Grant -. Refund / chargeback / cancellation<br/>of the qualifying visit .-> NoClawback((No clawback<br/>credit stays on balance))
+
+    classDef yes fill:#ecfdf5,stroke:#059669,color:#065f46;
+    classDef no fill:#fef2f2,stroke:#dc2626,color:#7f1d1d;
+    classDef neutral fill:#f8fafc,stroke:#64748b,color:#334155;
+    classDef grant fill:#f5f3ff,stroke:#7c3aed,color:#5b21b6;
+    class Grant grant;
+    class NoGrant,Expire,Revoke,NoClawback no;
+    class Redeem yes;
+    class NoOffer,WaitUp,WaitBnpl,Promo,Pay,Start neutral;
+        </pre>
+        <div class="diagram-caption">Earning side (Collection) on the left; spending side (Redemption) on the right. The dotted edge from <strong>Grant</strong> to <strong>No clawback</strong> is the invariant that once granted, credit is the patient's property — refunds, chargebacks and cancellations of the qualifying visit do not remove it.</div>
+      </div>
+
+      <h3>In plain English</h3>
+      <ol>
+        <li>A logged-in patient books with a Mexican or Brazilian doctor on DP Payments via dLocal.</li>
+        <li>If the patient has no card on file, is in the experiment's treatment group, has not earned the credit before, and accepts the T&amp;Cs at the card-save step, they become eligible for a one-time grant.</li>
+        <li>They save the card and pay for the visit with it.</li>
+        <li>After the visit ends (upfront) or after the existing BNPL post-visit capture fires, a scheduled job checks the visit. If nothing has been cancelled or refunded by then, the credit lands on their balance.</li>
+        <li>The credit is the patient's property from that moment. It expires six months later. They are reminded 30 days and 7 days before expiry.</li>
+        <li>On any future online-paid visit with an MX or BR DP Payments doctor, they can apply part or all of the credit at checkout. The doctor still receives the full visit price — the credit-funded portion is transferred from DocPlanner's platform pool at payout time.</li>
+      </ol>
+    </div>
+
+    <!-- EARNING -->
+    <div class="card" id="earning">
+      <h2>Earning Side (Collection)</h2>
+      <div class="pillrow">
+        <span class="pill">REVPAY-6419</span>
+        <span class="pill">39 ACs · AC-LOYALTY-COL-001..039</span>
+        <span class="pill">L</span>
+      </div>
+
+      <h3>Eligibility (server-side)</h3>
+      <ul>
+        <li>Logged-in patient (guests are out).</li>
+        <li>Doctor is in Mexico or Brazil and is onboarded onto DP Payments via dLocal.</li>
+        <li>The patient has zero cards on file in their wallet at the moment of booking.</li>
+        <li>The patient saves a card during the booking flow and pays for the visit with that newly saved card.</li>
+        <li>The patient has not previously earned the loyalty credit (one-time per patient, surviving "remove card and re-add" attempts).</li>
+      </ul>
+      <p>All conditions are evaluated server-side from the logged-in patient identity and the doctor's market — no client-supplied locale or country signal is trusted.</p>
+
+      <h3>Terms &amp; conditions at card-save</h3>
+      <ul>
+        <li>The patient sees the loyalty T&amp;Cs <em>before</em> the card is saved through the qualifying booking flow. Acceptance is recorded with patient identifier and timestamp.</li>
+        <li>T&amp;Cs explicitly disclose: credit is <em>non-cashable</em>, <em>non-transferable</em> between patients, <em>redeemable only</em> on bookings paid through DP Payments, <em>non-safeguarded</em> (not a regulated financial product, no cash value), and expires six months after grant <em>and</em> on patient account closure.</li>
+        <li>The word <strong>"cashback" is forbidden on every patient-facing surface</strong> — copy uses "credit" / "wallet credit" / "voucher".</li>
+      </ul>
+
+      <h3>Grant timing</h3>
+      <table>
+        <thead><tr><th>Payment type</th><th>When the grant fires</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="text-bold">Upfront-paid visit</td>
+            <td>When <code>visit.endAt &lt; now</code> AND no cancellation or refund has been recorded against the qualifying payment at the moment the grant job evaluates eligibility. Implementation: a scheduled job sweeps visits past their <code>endAt</code> and fires grants. Reschedules push the evaluation moment to the new <code>endAt</code>.</td>
+          </tr>
+          <tr>
+            <td class="text-bold">BNPL / deferred / post-visit-capture</td>
+            <td>At the same operational moment as the existing post-visit payment capture for that flow — e.g. the 48-hour cron, or the earlier doctor-marked outcome that closes the payment cycle.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="highlight-box highlight-amber">
+        <strong>Pre-grant cancel / refund: no grant — but eligibility is preserved</strong>
+        <p>If the qualifying visit is cancelled or fully refunded before the grant moment, no credit is issued. A partial refund before the grant moment also blocks the grant — only fully completed payments qualify. The patient's one-time eligibility is preserved and a future qualifying booking can still earn.</p>
+      </div>
+
+      <h3>Notifications &amp; visibility</h3>
+      <ul>
+        <li>After the grant fires, the patient is notified (in-product + email) with the amount and the expiry date.</li>
+        <li>The patient sees their current loyalty balance and the next expiry date on the wallet / payment-methods page.</li>
+        <li>Promotional copy appears at the payment-method-selection step and on the wallet step where the card is saved. The booking success page links the patient to the wallet, where the credit and its expiry will be visible once the grant fires.</li>
+        <li>Patients are reminded <strong>30 days</strong> and <strong>7 days</strong> before any grant is due to expire, if it is still wholly or partially unspent.</li>
+      </ul>
+    </div>
+
+    <!-- SPENDING -->
+    <div class="card" id="spending">
+      <h2>Spending Side (Redemption)</h2>
+      <div class="pillrow">
+        <span class="pill">REVPAY-6420</span>
+        <span class="pill">24 ACs · AC-LOYALTY-RED-001..024</span>
+        <span class="pill">L</span>
+      </div>
+
+      <h3>At checkout</h3>
+      <ul>
+        <li>On any future online-paid visit with an MX or BR doctor on DP Payments via dLocal, the patient can apply part or all of their loyalty balance to the visit price.</li>
+        <li>If the applied credit covers the visit fully, the card is not charged for that visit; the doctor still receives the full visit price via a Platform→merchant top-up.</li>
+        <li>If the applied credit covers only part of the price, the remainder is charged to the patient's saved card and the credit-funded portion is topped up to the merchant.</li>
+        <li><strong>Card on file is required</strong> to apply credit, even if the credit fully covers the visit — patients with no card on file see the redemption surface but with the control disabled and copy directing them to add a card.</li>
+        <li>Loyalty credit cannot be applied to pay-at-office visits, post-no-show punitive charges, or other non-visit charges. The BNPL upfront no-show-fee freeze is a valid redemption target — see below.</li>
+      </ul>
+
+      <h3>BNPL redemption mechanic</h3>
+      <div class="highlight-box highlight-violet">
+        <strong>Credit reduces the upfront no-show-fee freeze</strong>
+        <p>On a BNPL booking with applied credit, the credit reduces the <strong>upfront no-show-fee freeze</strong> placed at T-24h (not the remaining-amount freeze placed on visit day). The patient sees a correspondingly smaller hold at T-24h — immediate confirmation that the credit landed. Once that freeze is placed, the credit is consumed regardless of visit outcome (visit happens, late cancel, or no-show). Cancellations in the free window — before T-24h — restore the credit to the patient's balance.</p>
+      </div>
+
+      <h3>Receipts (transparency at checkout)</h3>
+      <ul>
+        <li>The booking success page displays the breakdown: service price, loyalty credit applied, amount charged or to-be-charged to card.</li>
+        <li>A supplementary receipt PDF is generated <strong>post-capture</strong> — for upfront-paid visits at checkout, for BNPL visits after the post-visit capture fires.</li>
+        <li>The same PDF is offered for download across <strong>four surfaces</strong>: web booking success page, web "My Visits", the patient app's Payments / Transactions section, and as an email attachment on the existing booking-confirmation / charge-completion email.</li>
+        <li>Localised to Spanish (es-MX) and Portuguese (pt-BR) at launch. Structured so IT-style tax-evidence fields can be added later without re-architecting.</li>
+      </ul>
+
+      <h3>Marketplace search filter</h3>
+      <p>A new filter on the marketplace search results page lets patients narrow to doctors and facilities that accept online payment via DP Payments — so a patient with a balance can immediately see where their credit is usable. The filter is exposable as a shareable deeplink (notifications, support copy, expiry reminders).</p>
+    </div>
+
+    <!-- LIFECYCLE -->
+    <div class="card" id="lifecycle">
+      <h2>Credit Lifecycle</h2>
+
+      <div class="two-col">
+        <div class="highlight-box highlight-green">
+          <strong>1 · Granted</strong>
+          <p>Credit lands on the patient's balance after the qualifying visit closes its payment cycle. From this moment it is <em>the patient's property</em> — DP cannot reclaim it except through the fraud admin tool.</p>
+        </div>
+        <div class="highlight-box highlight-blue">
+          <strong>2a · Redeemed</strong>
+          <p>Patient applies some or all of the balance at checkout on a future online-paid visit with an MX/BR DP Payments doctor. Doctor still receives 100% of the visit price via a Platform→merchant top-up at payout time.</p>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="highlight-box highlight-amber">
+          <strong>2b · Expired</strong>
+          <p>Any unspent portion of a grant expires six months after the grant date — each grant has its own expiry timer, redemption of one grant does not extend another. At expiry the unspent portion is removed and the patient is notified. The expired amount is recorded as <em>breakage</em> for finance.</p>
+        </div>
+        <div class="highlight-box highlight-amber">
+          <strong>2c · Revoked (fraud)</strong>
+          <p>An internal admin tool can revoke a specific grant manually after detected abuse — this is the <em>only</em> path that removes granted credit. The same tool also handles legitimate-non-fraud manual unwinds (e.g. restoring credit redeemed on a chargebacked visit).</p>
+        </div>
+      </div>
+
+      <div class="highlight-box highlight-violet">
+        <strong>Invariant: no clawback after grant</strong>
+        <p>Once a credit has been granted, any subsequent refund, chargeback, or cancellation of the qualifying visit does <strong>not</strong> remove the credit from the patient's balance. The balance never goes negative. This is what protects the program from "book → grant → refund → spend" abuse without needing a pre-grant delay timer; it also makes the credit a real promotional gift in legal/T&amp;Cs terms (which is what keeps the tax treatment clean).</p>
+      </div>
+    </div>
+
+    <!-- MONEY FLOW -->
+    <div class="card" id="money">
+      <h2>Money Flow at Redemption</h2>
+      <p>The doctor must remain at <strong>100% of the visit price</strong> on every redeeming visit — no temporary short-funding, no waiting for top-up. The credit-funded portion comes from DocPlanner's pre-funded platform account at dLocal and is settled into the doctor's merchant account at payout time.</p>
+
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+    DPpool[DocPlanner platform account<br/>at dLocal · pre-funded pool]
+    Patient[Patient's saved card]
+    Merchant[Doctor's merchant account<br/>at dLocal]
+
+    Patient -- Card capture<br/>price − credit applied --> Merchant
+    DPpool -- Platform→merchant top-up<br/>credit-funded portion<br/>deferred to payout time --> Merchant
+    Merchant --> Payout[Doctor payout<br/>100% of visit price]
+
+    classDef pool fill:#f5f3ff,stroke:#7c3aed,color:#5b21b6;
+    classDef card fill:#eff6ff,stroke:#2563eb,color:#1e3a8a;
+    classDef merchant fill:#ecfdf5,stroke:#059669,color:#065f46;
+    class DPpool pool;
+    class Patient card;
+    class Merchant,Payout merchant;
+        </pre>
+        <div class="diagram-caption">The Platform→merchant top-up uses dLocal's <code>create-transfer-v2-platforms</code> primitive. It is <strong>deferred to payout time</strong> (not redemption time) so a later visit cancellation does not incur a round-trip transfer fee.</div>
+      </div>
+
+      <h3>Chargeback semantics</h3>
+      <p>A chargeback on a redeeming visit reverses <strong>only</strong> the Platform→merchant top-up associated with that redemption — the credit-funded portion is pulled from the merchant's settlement balance first, falling to the Platform balance if insufficient. <strong>The patient's loyalty balance is unaffected</strong> — redeemed credit stays redeemed. Legitimate-non-fraud chargebacks can be unwound manually via the Collection admin tool.</p>
+
+      <h3>EU readiness from day one</h3>
+      <p>A per-market cumulative credit-funded transaction value is tracked and exposed in reporting. MX and BR don't gate on this today, but the accumulator and reporting hook exist from launch so a future EU rollout can monitor against the EUR 1M per-market regulatory threshold without re-platforming.</p>
+    </div>
+
+    <!-- ROLLOUT -->
+    <div class="card" id="rollout">
+      <h2>Markets &amp; Rollout</h2>
+      <p>Mexico and Brazil ship together as a country-neutral code path; per-country gating is for rollout safety, not divergent business rules.</p>
+
+      <table>
+        <thead>
+          <tr><th>Market</th><th>Currency</th><th>Tax/finance counterpart</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-mx">MX</span> Mexico</td>
+            <td>MXN</td>
+            <td>Enrique Rivero Borrell</td>
+            <td>Architectural direction validated; finance/tax review ongoing — Enrique collecting opinions as of 2026-05-18</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-br">BR</span> Brazil</td>
+            <td>BRL</td>
+            <td>Almir / Pedro Prado</td>
+            <td>BR validation pending — architectural direction not locked until BR is heard</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Experiment design</h3>
+      <ul>
+        <li><strong>A/B 50/50 treatment vs. control</strong> per market, running in parallel in MX and BR.</li>
+        <li>Treatment population: loyalty offer visible in the booking flow, qualifying card-saves earn the grant, redemption surface visible at checkout for patients with a non-zero balance.</li>
+        <li>Control population: no loyalty offer surfaced, no grant earned, no redemption surface.</li>
+        <li><strong>Per-country safety toggle:</strong> each market can be paused independently if metrics or bug reports indicate a problem in that market only.</li>
+        <li>Primary KPIs: online-paid share, wallet-adoption rate (cards on file), short-term retention (rebooking inside the credit's 6-month lifetime).</li>
+      </ul>
+
+      <h3>Patient-visible launch ordering</h3>
+      <p><strong>Collection ships first</strong> to land the credit ledger schema and the grant pipeline. <strong>Redemption ships second.</strong> The A/B assignment is wired in Collection but kept dormant (no treatment patients see the promo, no grants fire) until Redemption is also live behind a single shared feature flag. The flag flip — patient-visible launch — happens once both sub-cycles are merged and dLocal sandbox tests on the redemption funds-flow side have passed.</p>
+    </div>
+
+    <!-- SCOPE -->
+    <div class="card" id="scope">
+      <h2>Scope</h2>
+      <div class="two-col">
+        <div>
+          <h3>In Scope</h3>
+          <ul>
+            <li>One-time acquisition reward per patient at launch</li>
+            <li>Logged-in patients booking with MX or BR doctors on DP Payments via dLocal</li>
+            <li>Credit ledger schema (grants · redemptions · expirations · monthly liability snapshots)</li>
+            <li>T&amp;Cs surface at card-save, with acceptance audit record</li>
+            <li>Grant trigger for upfront and BNPL flows</li>
+            <li>Wallet balance + expiry display on patient panel</li>
+            <li>Redemption rules at checkout (full or partial)</li>
+            <li>BNPL no-show-fee mechanic — credit reduces the upfront T-24h freeze</li>
+            <li>Platform→merchant top-up via dLocal <code>create-transfer-v2-platforms</code></li>
+            <li>Chargeback handling — top-up reversal only, patient credit stays redeemed</li>
+            <li>Supplementary receipt PDF on 4 surfaces (web success, web My Visits, app, email), post-capture</li>
+            <li>Marketplace search-results filter for online-payment doctors (shareable deeplink)</li>
+            <li>A/B experiment with per-country safety toggle for MX and BR</li>
+            <li>Fraud-driven admin revocation tool (used by both sub-cycles)</li>
+            <li>Per-market cumulative credit-funded value accumulator (EU EUR 1M readiness)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Out of Scope</h3>
+          <ul>
+            <li>Retroactive grants for patients who already had a card on file at launch</li>
+            <li>Repeat grants per patient (architecture allows it; this cycle does not activate)</li>
+            <li>Percentage-based earning rate or tiered earning by visit price</li>
+            <li>Doctor-funded loyalty (doctor-side invoicing is non-viable for MX tax reasons)</li>
+            <li>Doctor-side opt-in or any doctor visibility into the program</li>
+            <li>Loyalty redemption on pay-at-office bookings</li>
+            <li>Loyalty earning on no-show fees, partial captures, or non-visit charges</li>
+            <li>Other LATAM markets beyond MX and BR (separate cycles)</li>
+            <li>Markets outside LATAM (PL, IT, ES, DE, TR — explicitly out at launch)</li>
+            <li>Loyalty across product lines beyond marketplace patient bookings</li>
+            <li>The dLocal↔DocPlanner B2B invoice flow that makes the program tax-deductible (handled by finance separately)</li>
+            <li>Legal T&amp;Cs copy itself (drafted by legal; the cycles wire up the surface area)</li>
+          </ul>
+          <h3>Estimated Size</h3>
+          <p><strong>XL</strong> at the program level — split into two L sub-cycles:</p>
+          <ol style="font-size:0.85rem;padding-left:1.25rem;">
+            <li><strong>Collection</strong> (REVPAY-6419) — earning side, 39 ACs</li>
+            <li><strong>Redemption</strong> (REVPAY-6420) — spending side, 24 ACs</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMON QUESTIONS -->
+    <div class="card" id="faq">
+      <h2>Common Questions</h2>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Anticipated questions from stakeholders — finance, legal, doctors-side, and operations.</p>
+
+      <details class="faq-item">
+        <summary class="faq-q">Why patient-side credit and not a doctor-side discount?</summary>
+        <div class="faq-a">
+          <p>We ranked three architectures with our MX finance counterpart:</p>
+          <ol>
+            <li><strong>Best — patient-side credit (what we are building).</strong> DP funds the reward; the patient owns the credit; the doctor is invisible to the program and receives 100% of the visit price as on any non-loyalty visit. SAT (the Mexican tax authority) sees the patient paying the full service price out of their own funds (card + credit). Clean on every side.</li>
+            <li><strong>OK — doctor-side reward with a B2B subsidy invoice.</strong> The doctor would invoice DP per transaction for a "marketing subsidy". This is operationally non-viable: every doctor would need to opt in and to issue extra paperwork, and most practitioners are IVA-exempt on medical services but a "marketing subsidy" invoice would trigger IVA they don't otherwise pay. Rational doctors would opt out. No program at scale.</li>
+            <li><strong>Bad — doctor-funded but framed as a patient gift in T&amp;Cs.</strong> Creates a three-way mismatch with SAT (doctor issues a CFDI for less than the patient paid, but the patient owns a credit they didn't pay for). Ruled out.</li>
+          </ol>
+          <p>Patient-side credit is also the cleanest architectural analogue to platforms that already do this at scale: Amazon's "Discount Provided by Amazon" line, Allegro's <em>AlleDiscount</em>, and the Starbucks gift-card model (platform-funded float, customer owns the credit, recognised as deferred expense until redemption).</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Why one-time and not recurring earning?</summary>
+        <div class="faq-a">
+          <p>The qualifying action we want to pay for is <em>saving a card on file</em>. A patient does that once. Anything beyond the first grant pays for behaviour we get for free (paying online with an already-saved card) instead of behaviour we are trying to change.</p>
+          <p>The data model and grant trigger are designed so a future repeat-earning rule can be turned on without a schema migration or T&amp;Cs rewrite — but the launch is deliberately narrow so we can read the experiment cleanly.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Why does the doctor get paid the full visit price on a redeeming visit? Where does the money come from?</summary>
+        <div class="faq-a">
+          <p>Doctor invisibility is a hard invariant. On a redeeming visit, the patient's card is charged only for the remainder (visit price − credit applied); the credit-funded portion is transferred from DocPlanner's pre-funded platform account at dLocal into the doctor's merchant account at payout time, using dLocal's <code>create-transfer-v2-platforms</code> primitive. The doctor's settlement, dashboards, invoices and tax documents are identical to a non-loyalty visit. They never see the program.</p>
+          <p>We <em>defer</em> the top-up to payout time (rather than firing it at the moment of redemption) so a later cancellation of the visit does not incur a round-trip transfer fee.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What if a patient gets a refund <em>after</em> the credit is granted? Or charges back the qualifying visit?</summary>
+        <div class="faq-a">
+          <p>The credit stays on the patient's balance. <strong>No clawback after grant.</strong> The same applies to redeeming visits: a chargeback reverses only the Platform→merchant top-up, never the patient's credit position.</p>
+          <p>This isn't generosity — it's load-bearing for the program's legal and tax framing. The credit is the patient's property from the moment it's granted; T&amp;Cs explicitly state it as non-revocable except for fraud. That is what lets us book it as a liability (deferred expense) rather than a per-transaction marketing expense, and what lets SAT recognise the patient as having paid the full service price from their own funds (card + credit).</p>
+          <p>The "book → grant → refund → spend" abuse vector is bounded by: (a) one-time per patient, (b) six-month expiry, (c) per-market credit value is a small fraction of an average visit, (d) the fraud admin tool as a kill switch if a pattern emerges.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Can the patient cash out the credit, transfer it, or use it outside DocPlanner?</summary>
+        <div class="faq-a">
+          <p>No, no, and no — and the T&amp;Cs say so explicitly. The credit is non-cashable, non-transferable between patients, and redeemable only on bookings paid through DP Payments. It also expires on patient account closure (in addition to the per-grant six-month timer). This is what keeps the program <em>non-safeguarded</em> — not a regulated financial product, no cash value.</p>
+          <p>Patient-facing copy uses "credit" / "wallet credit" / "voucher". The word "cashback" is forbidden on every patient-facing surface — even though the mental model people fall into, hearing about "a reward for paying online", is exactly cashback-to-card. Correct it explicitly in stakeholder comms.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">How does the patient redeem on a BNPL booking? Doesn't BNPL not charge anything upfront?</summary>
+        <div class="faq-a">
+          <p>On BNPL, the credit reduces the upfront <strong>no-show-fee freeze</strong> — the authorisation placed on the patient's card at T-24h, when the late-cancellation window begins. The patient sees a smaller hold than they otherwise would. That is the redemption.</p>
+          <p>Once the no-show-fee freeze has been placed, the credit is consumed regardless of visit outcome — visit happens (capture proceeds at the original NSF value, with the Platform→merchant top-up making up the credit-funded portion), late cancel (same), or no-show (same). Only a cancellation in the <em>free window</em>, before the freeze is placed at T-24h, restores the credit to the patient's balance.</p>
+          <p>The trade-off: DP subsidises the no-show fee on actual no-shows. The cost is bounded by the per-market credit value times no-show-rate-on-redeeming-bookings; the win is that the redemption is locked in early — at T-24h, while the patient's card is freshly added — which is a UX-trust beat we don't get if the redemption only materialises at post-visit capture.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">When exactly does the credit actually appear on the patient's balance?</summary>
+        <div class="faq-a">
+          <p>It depends on how they paid for the qualifying visit:</p>
+          <ul>
+            <li><strong>Upfront-paid visit:</strong> after <code>visit.endAt</code> has passed. A scheduled job sweeps visits past their <code>endAt</code> and fires the grant — provided no cancellation or refund has been recorded against the qualifying payment at the moment the job evaluates eligibility. Reschedules push the evaluation moment to the new <code>endAt</code>.</li>
+            <li><strong>BNPL / deferred / post-visit-capture:</strong> at the same operational moment as the existing post-visit capture for that flow — e.g. the 48-hour cron, or earlier if the doctor marks the visit outcome and that closes the payment cycle.</li>
+          </ul>
+          <p>Both flows produce a single audit record per grant (patient, doctor, country, visit, payment, amount, currency, grant date, expiry date). The patient receives an in-product + email notification at the moment the grant fires.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What happens if the patient removes their last card? Or never adds one?</summary>
+        <div class="faq-a">
+          <p>The balance is preserved but cannot be redeemed until a card is added back. At checkout, patients without a card see the redemption surface with the control disabled and copy telling them to add a card. The card-required guard applies even when the credit fully covers the visit — we never let a visit complete without a card on file, so we always have a tail-risk fallback (e.g. for chargebacks on the Platform→merchant top-up).</p>
+          <p>If a patient never adds a card back and the grant sits on the balance for six months, it expires as breakage. That is consistent with the program's design: the credit is real money owed to the patient (deferred expense) for the period it exists; breakage on expiry is policy, not a bug.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What is the financial trail? How does DocPlanner book this in accounting?</summary>
+        <div class="faq-a">
+          <p>Three layers:</p>
+          <ol>
+            <li><strong>At grant.</strong> Each granted credit is booked as a liability (deferred expense / amount owed to the patient) on DocPlanner's balance sheet, NOT as a marketing expense at the moment of grant. The credit is the patient's property; the obligation lives on our books until it is redeemed or expires.</li>
+            <li><strong>At redemption or expiry.</strong> The liability is released — into a real expense (on redemption, when DP funds the Platform→merchant top-up) or into breakage income (on expiry, when the unspent portion is recognised as no-longer-owed).</li>
+            <li><strong>Tax deductibility.</strong> dLocal periodically (monthly) invoices DocPlanner for "loyalty program services" — that locally tax-valid invoice is what makes the underlying spend deductible per market. This is being worked out with dLocal pricing (Costanza Besozzi) and DP Head of Finance; it is not part of the engineering cycle scope.</li>
+          </ol>
+          <p>Audit-grade records exist from day one for every grant, redemption, and expiry, linked to the underlying payment and visit identifiers — so finance can reconcile against dLocal payment records during monthly close.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What about EU rollout? Doesn't the EU have caps on programs like this?</summary>
+        <div class="faq-a">
+          <p>The EU's e-money / safeguarding regime caps platform-funded credit programs at <strong>EUR 1M per market</strong> before they cross into regulated territory. MX and BR don't gate on this, but a future EU rollout will — so the architecture tracks per-market cumulative credit-funded transaction value from day one and exposes it in reporting. No re-platforming needed when we expand into PL / IT / ES; we just start reading the accumulator.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">How can we be sure the doctor never sees the program?</summary>
+        <div class="faq-a">
+          <p>Doctor invisibility is a cross-cycle invariant that gets verified by spot-check across every doctor-facing surface during the Redemption sub-cycle — settings, transaction list, payouts, doctor app, doctor email. No surface discloses or references the program. The doctor's CFDI / NFS-e, payout, and any tax document are identical to a non-loyalty visit.</p>
+          <p>This is non-negotiable for two reasons: (a) operational — the goal is loyalty running transparently in the background, not selling extra product to each merchant; (b) tax — the moment a doctor's invoicing touches the program, the patient-side architecture stops being clean and we slide into the doctor-side options that were ruled out.</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- REFERENCES -->
+    <div class="card" id="refs">
+      <h2>References</h2>
+      <ul>
+        <li>Parent epic: <a href="https://docplanner.atlassian.net/browse/REVPAY-6421">REVPAY-6421 — Loyalty Program LATAM</a> (umbrella)</li>
+        <li>Collection sub-cycle: <a href="https://docplanner.atlassian.net/browse/REVPAY-6419">REVPAY-6419 — [Collection] Loyalty Program LATAM</a> (earning side, 39 ACs)</li>
+        <li>Redemption sub-cycle: <a href="https://docplanner.atlassian.net/browse/REVPAY-6420">REVPAY-6420 — [Redemption] Loyalty Program LATAM</a> (spending side, 24 ACs)</li>
+        <li>Scaffold PR: <a href="https://github.com/DocPlanner/dp-payments-ai/pull/332">DocPlanner/dp-payments-ai#332</a> — <code>spec(REVPAY-6421): scaffold LATAM loyalty program request</code></li>
+        <li>dLocal funds-flow primitive used for the Platform→merchant top-up: <a href="https://docs.dlocal.com/reference/create-transfer-v2-platforms-1"><code>create-transfer-v2-platforms</code></a></li>
+      </ul>
+    </div>
+
+    <div class="updated">
+      Briefing last updated 2026-05-18 &middot; Project hub: <a href="https://annamariakrol.github.io/features/">annamariakrol.github.io/features</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+        primaryColor: '#f0fdfa',
+        primaryTextColor: '#0f766e',
+        primaryBorderColor: '#0d9488',
+        lineColor: '#475569',
+        secondaryColor: '#f5f3ff',
+        tertiaryColor: '#fef3c7'
+      },
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+  </script>
+</body>
+</html>
